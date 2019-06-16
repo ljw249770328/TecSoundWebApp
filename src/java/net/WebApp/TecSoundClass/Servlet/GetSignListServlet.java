@@ -38,8 +38,15 @@ public class GetSignListServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             String Sid = request.getParameter("user_id").trim();
             String Cid= request.getParameter("course_id").trim();
+            String Uiden= request.getParameter("user_identity");
             //调用查询
-            JSONArray mSignList = querySign(Sid, Cid);
+            JSONArray mSignList =null;
+            if(Uiden.equals("老师")){
+                mSignList=querySign(Cid);
+            }else{
+                mSignList = querymSign(Sid, Cid);
+            }
+            
             JSONObject jsonObject = new JSONObject();
             Map<String,JSONArray> params = new HashMap<>();
             params.put("Signs", mSignList);
@@ -54,14 +61,12 @@ public class GetSignListServlet extends HttpServlet {
         doPost(request, response);
     }
 
-    /**
-     * 验证是否匹配
-     *
-     * @param userName
-     * @param realname
-     * 
-     */
-    private JSONArray querySign(String Sid,String Cid) {
+    
+    private JSONArray querymSign(String Sid,String Cid) {
         return SignDao.queryMySign(Cid, Sid);
+    }
+    
+    private JSONArray querySign(String Cid){
+        return SignDao.querySign(Cid);
     }
 }

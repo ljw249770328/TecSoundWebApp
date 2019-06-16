@@ -41,7 +41,7 @@ public class AddInteractServlet extends HttpServlet {
             interaction.setAnswer_user_id(request.getParameter("answer_user_id"));
             interaction.setProblem_content(request.getParameter("problem_content"));
             interaction.setProblem_content_src(request.getParameter("problem_content_src"));
-            interaction.setAnswer_content(request.getParameter("answer_content"));
+            interaction.setAnswer_content(request.getParameter("answer_content").trim());
             interaction.setAnswer_content_src(request.getParameter("answer_content_src"));
             interaction.setAnswer_grade(request.getParameter("answer_grade"));
             //调用查询

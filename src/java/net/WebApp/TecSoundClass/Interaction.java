@@ -10,7 +10,7 @@ package net.WebApp.TecSoundClass;
  * @author Administrator
  */
 public class Interaction {
-    private String propose_course_id="",answer_user_id="",answer_content="",answer_content_src="",answer_time="",problem_id="",answer_grade="",problem_content = "",problem_content_src = "";;
+    private String propose_course_id="",answer_user_id="",answer_content="",answer_content_src="",answer_time="",problem_id="",answer_grade="",problem_content = "",problem_content_src = "";
 
      public String getProblem_content() {
         return problem_content;

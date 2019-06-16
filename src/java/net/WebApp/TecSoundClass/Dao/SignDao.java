@@ -62,6 +62,44 @@ public class SignDao {
         }
     }
     
+    public static JSONArray querySign(String Cid){
+        JSONArray signs =new JSONArray();
+        Connection connection =DBManager.getConnection();
+        PreparedStatement preparedStatement =null;
+        ResultSet resultSet= null;
+        
+        
+        StringBuilder sqlstqtement =new StringBuilder();
+        sqlstqtement.append("select sign.* from sign where sign_course=? ORDER BY sign_time DESC");
+        
+        try {
+            preparedStatement=connection.prepareCall(sqlstqtement.toString());
+            preparedStatement.setString(1, Cid);
+            
+            resultSet=preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                JSONObject sign=new JSONObject();
+                sign.put("sign_user_id",resultSet.getString("sign_user_id"));
+                sign.put("sign_course",resultSet.getString("sign_course"));
+                sign.put("sign_address",resultSet.getString("sign_address"));
+                sign.put("sign_time",resultSet.getString("sign_time"));
+                sign.put("sign_state",resultSet.getString("sign_state"));
+                sign.put("sign_voice_src",resultSet.getString("sign_voice_src"));
+                sign.put("sign_facepic_src",resultSet.getString("sign_facepic_src"));
+                signs.add(sign);
+            }
+            return signs;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(SignDao.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }finally{
+            DBManager.closeAll(connection, preparedStatement, resultSet);
+        }
+        
+        
+    }
+    
     public static String insertSign(Sign sign){
         //获得数据库的连接对象
         Connection connection = DBManager.getConnection();
